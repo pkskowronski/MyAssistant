@@ -1,0 +1,6 @@
+@MyAssistant_HostAddress = http://localhost:5096
+
+GET {{MyAssistant_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
