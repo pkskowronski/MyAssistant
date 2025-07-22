@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.AI;
+using System.Threading.Tasks;
 
 namespace MyAssistant.Controllers
 {
-    public class PlaygroundController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class PlaygroundController(IChatService chatService) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var metaPrompt = "You are a helpful assistant. Answer the user's questions to the best of your ability.";
+            var chatHistory = chatService.CreateChatHistory(metaPrompt);
+            var answer = await chatService.GetChatCompletionAsync(chatHistory);
+            return Ok(answer);
         }
     }
 }

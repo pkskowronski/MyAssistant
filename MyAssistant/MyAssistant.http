@@ -1,6 +1,6 @@
 @MyAssistant_HostAddress = http://localhost:5096
 
-GET {{MyAssistant_HostAddress}}/weatherforecast/
+GET {{MyAssistant_HostAddress}}/playground/
 Accept: application/json
 
 ###
