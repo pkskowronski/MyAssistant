@@ -1,10 +1,12 @@
-﻿using Application.Abstractions;
+﻿using Domain.Interfaces;
+using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using OpenAI;
 using OpenAI.Chat;
-using ChatMessage = OpenAI.Chat.ChatMessage;
+using ChatMessage = Domain.Entities.ChatMessage;
+using SdkChatMessage = OpenAI.Chat.ChatMessage;
 
-namespace Application.Services
+namespace Infrastructure.Ai
 {
     public class ChatService : IChatService
     {
@@ -18,14 +20,14 @@ namespace Application.Services
                 new OpenAIClient(key).GetChatClient(model);
         }
 
-        public List<ChatMessage> CreateChatHistory(string metaPrompt)
+        public List<SdkChatMessage> CreateChatHistory(string metaPrompt)
         {
             var systemMessage = new SystemChatMessage(metaPrompt);
-            List<ChatMessage> chatHistory = [systemMessage];
+            List<SdkChatMessage> chatHistory = [systemMessage];
             return chatHistory;
         }
 
-        public async Task<string> GetChatCompletionAsync(List<ChatMessage> chatHistory)
+        public async Task<string> GetChatCompletionAsync(List<SdkChatMessage> chatHistory)
         {
             var chatCompletion = await _chatClient.CompleteChatAsync(chatHistory);
             return ReturnTextFromChatCompletion(chatCompletion.Value);

@@ -1,7 +1,7 @@
-﻿using Application.Abstractions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.AI;
 using System.Threading.Tasks;
+using Domain.Interfaces;
 
 namespace MyAssistant.Controllers
 {
@@ -12,9 +12,10 @@ namespace MyAssistant.Controllers
         public async Task<IActionResult> Index()
         {
             var metaPrompt = "You are a helpful assistant. Answer the user's questions to the best of your ability.";
-            var chatHistory = chatService.CreateChatHistory(metaPrompt);
-            var answer = await chatService.GetChatCompletionAsync(chatHistory);
-            return Ok(answer);
+            //var chatHistory = chatService.CreateChatHistory(metaPrompt);
+            //var answer = await chatService.GetChatCompletionAsync(chatHistory);
+            //return Ok(answer);
+            return Ok("This is a placeholder response. Implement your chat logic here.");
         }
     }
 }

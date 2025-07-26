@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Abstractions
+namespace Domain.Entities
 {
-    internal interface ITodoistService
-    {
-    }
+    public record ChatMessage(string Role, string Content);
+
 }

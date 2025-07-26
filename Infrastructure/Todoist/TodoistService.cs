@@ -1,8 +1,8 @@
-﻿using Application.Abstractions;
+﻿using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Todoist.Net;
 
-namespace Application.Services
+namespace Infrastructure.Todoist
 {
     internal class TodoistService : ITodoistService
     {
@@ -17,7 +17,7 @@ namespace Application.Services
         public async Task<string> GetTodoistTasksAsync()
         {
             var tasks = await _todoistClient.Projects.GetAsync();
-            return string.Join(Environment.NewLine, tasks.Select(t => $"{t.Content} (ID: {t.Id})"));
+            return string.Join(Environment.NewLine, tasks.Select(t => $"{t.Name} (ID: {t.Id})"));
         }
     }
 }

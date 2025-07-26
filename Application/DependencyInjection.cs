@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Application.Abstractions;
-using Application.Services;
+using Domain.Interfaces;
+using Infrastructure.Ai;
 
 namespace Application
 {
