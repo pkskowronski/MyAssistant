@@ -1,6 +1,6 @@
 @MyAssistant_HostAddress = http://localhost:5096
 
-GET {{MyAssistant_HostAddress}}/playground/
+GET {{MyAssistant_HostAddress}}/api/tasks/recommend-order/
 Accept: application/json
 
 ###

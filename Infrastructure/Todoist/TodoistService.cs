@@ -1,10 +1,12 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities;
+using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Todoist.Net;
+using Todoist.Net.Models;
 
 namespace Infrastructure.Todoist
 {
-    internal class TodoistService : ITodoistService
+    public class TodoistService : ITodoistService
     {
         private readonly IConfiguration _configuration;
         private readonly ITodoistClient _todoistClient;
@@ -14,10 +16,23 @@ namespace Infrastructure.Todoist
             _todoistClient = new TodoistClient(_configuration["TodoistApiKey"]);
         }
 
-        public async Task<string> GetTodoistTasksAsync()
+        public async Task<List<TaskItem>> GetActiveTasksAsync()
         {
-            var tasks = await _todoistClient.Projects.GetAsync();
-            return string.Join(Environment.NewLine, tasks.Select(t => $"{t.Name} (ID: {t.Id})"));
+            var todoistTasks = await _todoistClient.Items.GetAsync();
+
+            return todoistTasks.Select(MapToDomain).ToList();
+        }
+
+        private TaskItem MapToDomain(Item item)
+        {
+            return new TaskItem(
+                item.Id.ToString(),
+                item.Content,
+                (int?)item.Priority ?? 1,
+                item.Deadline?.Date,
+                item.IsChecked ?? false,
+                item.Labels?.ToList()
+            );
         }
     }
 }
